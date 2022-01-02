@@ -1,4 +1,6 @@
 # ServiceDown_twitterBot
+[![](https://badgen.net/badge/Node.JS/%3E%3D%2010.16.0/green)]()  [![](https://badgen.net/badge/Twitter/API/cyan?icon=twitter)]()
+
 A twitter bot who send tweet when a service is down
 
 ## Instalation
