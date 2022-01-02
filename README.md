@@ -3,7 +3,7 @@
 
 A twitter bot who send tweet when a service is down
 
-## Instalation
+## installation
 For setup the twitter bot, you need:
 - A Node.js server (I use Node.js v: 14.15.0)
 - Twit lib ``` npm install twit``` in your project
