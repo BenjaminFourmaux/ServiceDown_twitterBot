@@ -13,12 +13,13 @@ And enjoy !
 
 ## Features
 ### Current
-- Just tweet "Hello World !"
+- Send a tweet with some informations about the status of the service
 
 ### Wishlist
-- Send a tweet when a service is down
+- Send a tweet when a service is down (automaticlly)
 - Reply when a user tag him for know the status of a service 
 
 ## Versions 
 Current **v:1**
+- v:1.1 : Send tweet about the service's status
 - v:1 : Say Hello World !
