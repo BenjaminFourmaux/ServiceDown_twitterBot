@@ -1,5 +1,5 @@
 # ServiceDown_twitterBot
-[![](https://badgen.net/badge/Node.JS/%3E%3D%2010.16.0/green)]()  [![](https://badgen.net/badge/Twitter/API/cyan?icon=twitter)]() [![](https://badgen.net/badge/ServiceDown_api/v1.0.0?icon=github)](https://github.com/BenjaminFourmaux/ServiceDown_api)
+[![](https://badgen.net/badge/Node.JS/%3E%3D%2010.16.0/green)]()  [![](https://badgen.net/badge/Twitter/API/cyan?icon=twitter)]() [![](https://badgen.net/badge/ServiceDown_api/v1.2.0?icon=github)](https://github.com/BenjaminFourmaux/ServiceDown_api)
 
 A twitter bot who send tweet when a service is down
 
