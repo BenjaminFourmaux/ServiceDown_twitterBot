@@ -15,13 +15,59 @@ var config = require('./config.js');
 const T = new Twit(config);
 
 const API = new ServiceDown_api();
+const TimeLoop = 300000; // 300000 = 5 minutes
+const TimeCallApi = 5000 // 5000 = 5 secondq
 
-(async () => {
-	serviceStatus = await API.getServiceStatus("facebook");
-	
-	// Tweet send
-	sendTweet(tweetPatern(serviceStatus));
-})()
+// Set list of services to be queried
+const ServicesQueried = ["facebook", "google", "instagram", "orange", "free", "sfr", "discord", "snapchat", "tiktok", "twitch", "youtube", "netflix"];
+var LastStatusServices = [];
+
+
+function getServicesStatus(){
+	// Get statut of the service
+	(async () => {
+		// Browse list of services queried
+		for (var i = 0; i < ServicesQueried.length; i++){
+			serviceStatus = await API.getServiceStatus(ServicesQueried[i]);
+			
+			// Check if the previous statut change
+			if (LastStatusServices[i] != null && LastStatusServices[i] != serviceStatus.service_status){
+				// Tweet send
+				sendTweet(tweetPatern(serviceStatus));
+			}	
+			// Status not change or is the first loop
+			LastStatusServices[i] = serviceStatus.service_status;
+			
+			// Log in the console
+			consoleLogStatut(serviceStatus);
+			
+			// Timeout
+			await wait(TimeCallApi);
+		}
+		
+		// Log separtor
+		console.log("-------------------------------------");
+		
+		// loop call
+		await wait(TimeLoop);
+		getServicesStatus();
+		
+	})()
+}
+async function wait(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
+
+
+getServicesStatus();
+
+
+
+
+
+/** Technical functions **/
 
 function sendTweet(tweetSend) {
 	T.post('statuses/update', {status: tweetSend}, function(error, tweet, response) {
@@ -75,5 +121,13 @@ function datetimeFormater(dt){
 	let mounth = (dt.getMonth() + 1).toString().padStart(2, "0");
 	let year = dt.getFullYear();
 	
-	return hours + ":" + minutes + " " + day + "/" + mounth + "/" + year;
+	return day + "/" + mounth + "/" + year + " " + hours + ":" + minutes;
+}
+
+function consoleLogStatut(apiResponse){
+	// console font color
+	var fontColor;
+	switch (apiResponse.service_status){case "ok":fontColor = "\x1b[32m%s\x1b[37m";break;case "warning":fontColor = "\x1b[33m%s\x1b[37m";break;case "error":fontColor = "\x1b[31m%s\x1b[37m";break;default:fontColor = "\x1b[37m%s\x1b[37m";break;}
+	
+	console.log(fontColor, datetimeFormater(apiResponse.datetime) + " => " + apiResponse.service_name + " -> " + apiResponse.service_status);
 }
